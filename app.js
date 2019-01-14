@@ -1,7 +1,12 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const morgan = require('morgan')
 
 // Middlewares
 const app = express();
+app.use(bodyParser.json());
+morgan('combined');
+
 // Routes
 app.use('/', require('./routes/index'));
 
