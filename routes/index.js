@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
+const { mySchema } = require('../model/schema');
 
 
 mongoose.connect('mongodb://localhost/testApi', {useNewUrlParser: true}, () => {
@@ -8,18 +9,22 @@ mongoose.connect('mongodb://localhost/testApi', {useNewUrlParser: true}, () => {
 });
 
 router.get('/api', (req, res) => {
-  res.json({
-    message: 'Hello'
-  });
+  res.json({message: "Hello"});
 });
 
 router.post('/api', (req, res) => {
-  const message = req.body.message;
-  const title = req.body.title;
-  res.json({
-    message: message,
-    title: title
+  const result = new mySchema({
+    message: req.body.message,
+    title: req.body.title
   });
+  result.save(() => {
+    console.log('Saved');
+    if(error) {
+      console.log(err);
+    }
+  });
+  
+  res.json();
 });
 
 
